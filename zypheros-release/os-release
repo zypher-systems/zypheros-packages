@@ -1,5 +1,5 @@
 NAME="ZypherOS"
-PRETTY_NAME="ZypherOS Alpha"
+PRETTY_NAME="ZypherOS v0.1.1 Alpha"
 ID=zypheros
 ID_LIKE=arch
 BUILD_ID=0.1.1
