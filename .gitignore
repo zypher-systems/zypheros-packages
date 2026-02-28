@@ -1,0 +1,15 @@
+# Ignore compiled packages
+*.pkg.tar.*
+
+# Ignore makepkg working directories
+pkg/
+src/
+
+# Ignore source downloads (if you ever build packages that download tarballs)
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.zip
+
+# Ignore log files
+*.log
