@@ -1,20 +1,35 @@
 pkgname=zypheros-release
-pkgver=0.1.1
-pkgrel=3
+pkgver=0.1.2
+pkgrel=2
 pkgdesc="ZypherOS system identity and release files"
 arch=('any')
 url="https://zyphersystems.com"
 license=('GPL')
 depends=('filesystem')
-source=('os-release' 'issue' 'issue.net')
-sha256sums=('SKIP' 'SKIP' 'SKIP')
+# The source array now pulls your images directly from GitHub during the build
+source=('os-release'
+  'issue'
+  'issue.net'
+  'logo.txt'
+  'wallpaper.png::https://raw.githubusercontent.com/zypher-systems/Zypher_OS/main/images/zypher_os_wallpaper.png'
+  'icon.png::https://raw.githubusercontent.com/zypher-systems/Zypher_OS/main/images/zypher_os_launcher_icon.png')
+# SKIP means it won't fail if the files change, but for production later you can generate real sha256 hashes
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
-  # Create the target directory structure inside the package
+  # 1. Install Identity Files
   mkdir -p "$pkgdir/etc"
-
-  # Install the files with the correct 644 (read-write for root, read-only for others) permissions
   install -Dm644 "$srcdir/os-release" "$pkgdir/etc/os-release"
   install -Dm644 "$srcdir/issue" "$pkgdir/etc/issue"
   install -Dm644 "$srcdir/issue.net" "$pkgdir/etc/issue.net"
+
+  # 2. Create the standard Arch symlink
+  mkdir -p "$pkgdir/usr/lib"
+  ln -sf ../../etc/os-release "$pkgdir/usr/lib/os-release"
+
+  # 3. Install Branding Assets
+  mkdir -p "$pkgdir/usr/share/zypheros/branding"
+  install -Dm644 "$srcdir/wallpaper.png" "$pkgdir/usr/share/zypheros/branding/wallpaper.png"
+  install -Dm644 "$srcdir/icon.png" "$pkgdir/usr/share/zypheros/branding/icon.png"
+  install -Dm644 "$srcdir/logo.txt" "$pkgdir/usr/share/zypheros/branding/logo.txt"
 }
