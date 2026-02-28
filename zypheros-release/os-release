@@ -1,0 +1,13 @@
+NAME="ZypherOS"
+PRETTY_NAME="ZypherOS Alpha"
+ID=zypheros
+ID_LIKE=arch
+BUILD_ID=0.1.1
+VERSION="0.1.1 Alpha"
+VERSION_ID=0.1.1
+ANSI_COLOR="1;36"
+HOME_URL="https://zyphersystems.com/"
+DOCUMENTATION_URL="https://zyphersystems.com/"
+SUPPORT_URL="https://zyphersystems.com/"
+BUG_REPORT_URL="https://zyphersystems.com/"
+LOGO=zypheros

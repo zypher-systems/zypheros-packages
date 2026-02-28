@@ -1,0 +1,20 @@
+pkgname=zypheros-release
+pkgver=0.1.1
+pkgrel=1
+pkgdesc="ZypherOS system identity and release files"
+arch=('any')
+url="https://zyphersystems.com"
+license=('GPL')
+depends=('filesystem')
+source=('os-release' 'issue' 'issue.net')
+sha256sums=('SKIP' 'SKIP' 'SKIP')
+
+package() {
+  # Create the target directory structure inside the package
+  mkdir -p "$pkgdir/etc"
+
+  # Install the files with the correct 644 (read-write for root, read-only for others) permissions
+  install -Dm644 "$srcdir/os-release" "$pkgdir/etc/os-release"
+  install -Dm644 "$srcdir/issue" "$pkgdir/etc/issue"
+  install -Dm644 "$srcdir/issue.net" "$pkgdir/etc/issue.net"
+}
