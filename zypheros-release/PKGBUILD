@@ -1,6 +1,6 @@
 pkgname=zypheros-release
 pkgver=0.1.1
-pkgrel=1
+pkgrel=3
 pkgdesc="ZypherOS system identity and release files"
 arch=('any')
 url="https://zyphersystems.com"
