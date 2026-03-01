@@ -1,0 +1,22 @@
+pkgname=zypheros-ghostty
+pkgver=0.1.2
+pkgrel=1
+pkgdesc="ZypherOS custom Ghostty terminal environment and shell"
+arch=('any')
+url="https://zyphersystems.com"
+license=('GPL')
+# We keep starship here so Pacman still installs the binary
+depends=('ghostty' 'fish' 'starship' 'fastfetch' 'neovim')
+source=('ghostty.config'
+  'fish.config.fish')
+sha256sums=('SKIP' 'SKIP')
+
+package() {
+  # 1. Ghostty
+  mkdir -p "$pkgdir/etc/skel/.config/ghostty"
+  install -Dm644 "$srcdir/ghostty.config" "$pkgdir/etc/skel/.config/ghostty/config"
+
+  # 2. Fish Shell
+  mkdir -p "$pkgdir/etc/skel/.config/fish"
+  install -Dm644 "$srcdir/fish.config.fish" "$pkgdir/etc/skel/.config/fish/config.fish"
+}
