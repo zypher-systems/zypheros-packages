@@ -1,0 +1,22 @@
+pkgname=zypheros-fastfetch
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Default Fastfetch configuration and branding for ZypherOS"
+arch=('any')
+url="https://zyphersystems.com"
+license=('GPL')
+depends=('fastfetch')
+source=('config.jsonc')
+sha256sums=('SKIP')
+
+package() {
+  # Create the global fastfetch config directory
+  install -dm755 "$pkgdir/usr/share/fastfetch/presets"
+
+  # Install the custom config file
+  install -Dm644 "$srcdir/config.jsonc" "$pkgdir/usr/share/fastfetch/presets/zypheros"
+
+  # We will also drop it in /etc/ so it applies system-wide for all users by default
+  install -dm755 "$pkgdir/etc/fastfetch"
+  install -Dm644 "$srcdir/config.jsonc" "$pkgdir/etc/fastfetch/config.jsonc"
+}
