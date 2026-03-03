@@ -1,0 +1,39 @@
+# Maintainer: Dusty <your.email@example.com>
+
+pkgname=zypheros-virtualization
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Metapackage providing the complete QEMU/KVM virtualization stack for ZypherOS"
+arch=('any')
+url="https://zyphersystems.com"
+license=('MIT')
+
+# These are the actual packages this metapackage will pull down when installed
+depends=(
+  'qemu-full'      # The core hypervisor and hardware emulation
+  'libvirt'        # The management API for QEMU/KVM
+  'virt-manager'   # The graphical UI for managing VMs
+  'virt-viewer'    # A lightweight UI for interacting with the VM console
+  'dnsmasq'        # Required for the default libvirt NAT network
+  'bridge-utils'   # Required for creating bridged network interfaces
+  'openbsd-netcat' # Required for remote management via SSH in virt-manager
+  'edk2-ovmf'      # Provides UEFI firmware for the virtual machines
+  'iptables-nft'   # Required backend for libvirt networking routing
+  'vde2'           # Virtual Distributed Ethernet for advanced networking
+)
+
+# A metapackage doesn't actually compile code, but makepkg requires a package() function.
+# We just create a simple dummy file so the package isn't literally empty.
+package() {
+  mkdir -p "$pkgdir/usr/share/doc/$pkgname"
+  cat <<EOF >"$pkgdir/usr/share/doc/$pkgname/README.md"
+# ZypherOS Virtualization Stack
+This metapackage installs the complete QEMU/KVM and libvirt stack.
+
+To get started after installation, ensure the libvirtd service is running:
+sudo systemctl enable --now libvirtd
+
+You may also need to add your user to the libvirt group:
+sudo usermod -aG libvirt \$USER
+EOF
+}
