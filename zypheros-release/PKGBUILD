@@ -1,5 +1,5 @@
 pkgname=zypheros-release
-pkgver=0.1.4
+pkgver=0.1.5
 pkgrel=1
 pkgdesc="ZypherOS system identity and release files"
 arch=('any')
