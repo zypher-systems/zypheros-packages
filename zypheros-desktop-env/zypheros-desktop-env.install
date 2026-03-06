@@ -1,0 +1,12 @@
+post_install() {
+  echo ":: Cloning LazyVim profile into /etc/skel..."
+  if [ ! -d "/etc/skel/.config/nvim" ]; then
+    mkdir -p /etc/skel/.config
+    git clone https://github.com/zypher-systems/nvim-config.git /etc/skel/.config/nvim
+    rm -rf /etc/skel/.config/nvim/.git
+  fi
+}
+
+post_upgrade() {
+  post_install
+}

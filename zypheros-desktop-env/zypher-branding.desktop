@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=ZypherOS Branding Apply
+Exec=/usr/share/zypheros/branding/zypher-branding.sh
+X-KDE-autostart-condition=

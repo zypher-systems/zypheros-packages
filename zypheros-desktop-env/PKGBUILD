@@ -1,0 +1,79 @@
+# Maintainer: Dusty <your.email@example.com>
+
+pkgname=zypheros-desktop-env
+pkgver=0.2.0
+pkgrel=2
+pkgdesc="Core desktop environment, dotfiles, and branding for ZypherOS"
+arch=('any')
+url="https://zyphersystems.com"
+license=('MIT')
+
+# This is where the magic happens. We mix standard Arch packages with your custom ones.
+depends=(
+  'plasma-meta'
+  'sddm'
+  'pipewire'
+  'pipewire-pulse'
+  'dolphin'
+  'zypheros-ghostty'   # Pulled from your custom repo
+  'zypheros-fastfetch' # Pulled from your custom repo
+  'neovim'
+  'git'
+  'ttf-meslo-nerd'
+)
+
+# These are the local files sitting next to your PKGBUILD on your build server
+source=(
+  'kdeglobals'
+  'kcminputrc'
+  'wallpaper.png'
+  'icon.png'
+  'settings.json'                # Discord settings
+  'zypheros-desktop-env.install' # The post-install script for LazyVim & DBus
+  'zypher-branding.sh'           # ADDED: The universal branding script
+  'zypher-branding.desktop'      # ADDED: The global autostart trigger
+)
+
+# Tells Pacman to run this script after the files are extracted
+install='zypheros-desktop-env.install'
+
+package() {
+  # 1. Stage the KDE and Discord Dotfiles to /etc/skel (applies to all new users)
+  install -Dm644 "$srcdir/kdeglobals" "$pkgdir/etc/skel/.config/kdeglobals"
+  install -Dm644 "$srcdir/kcminputrc" "$pkgdir/etc/skel/.config/kcminputrc"
+  install -Dm644 "$srcdir/settings.json" "$pkgdir/etc/skel/.config/discord/settings.json"
+
+  # 2. Stage the Global Environment Variables
+  mkdir -p "$pkgdir/etc"
+  echo "TERMINAL=ghostty" >"$pkgdir/etc/environment"
+
+  # 3. Stage the SDDM Configuration
+  install -Dm644 /dev/null "$pkgdir/etc/sddm.conf.d/numlock.conf"
+  echo -e "[General]\nNumlock=on" >"$pkgdir/etc/sddm.conf.d/numlock.conf"
+
+  install -Dm644 /dev/null "$pkgdir/etc/sddm.conf.d/10-theme.conf"
+  echo -e "[Theme]\nCurrent=breeze" >"$pkgdir/etc/sddm.conf.d/10-theme.conf"
+
+  # 4. Stage the Branding Assets
+  install -Dm644 "$srcdir/wallpaper.png" "$pkgdir/usr/share/zypheros/branding/wallpaper.png"
+  install -Dm644 "$srcdir/icon.png" "$pkgdir/usr/share/zypheros/branding/icon.png"
+
+  # Configure SDDM to use your custom wallpaper
+  install -Dm644 /dev/null "$pkgdir/usr/share/sddm/themes/breeze/theme.conf.user"
+  echo -e "[General]\nbackground=/usr/share/zypheros/branding/wallpaper.png" >"$pkgdir/usr/share/sddm/themes/breeze/theme.conf.user"
+
+  # 5. ZypherOS branding application
+  # Install the universal branding script
+  install -Dm755 "$srcdir/zypher-branding.sh" "$pkgdir/usr/share/zypheros/branding/zypher-branding.sh"
+
+  # Install the global autostart trigger
+  install -Dm644 "$srcdir/zypher-branding.desktop" "$pkgdir/etc/xdg/autostart/zypher-branding.desktop"
+}
+sha256sums=('19ab9c58f4e949ad642dc20385674734857b2dfdbdab60dbab7cc31d6d1f68a7'
+  'e5e06725a5b08dc81319b80fcde90f38879f810bc1282819b1f26e0f48c3588d'
+  '9538930a7aaee16aa70c3294672cccdd2d2359fb72ea1c060bcd5b5e16db6ea2'
+  '5deb259ff8fc2516aa643f9b2c052aad212db1760cd000ead20d0ce563253ebb'
+  '1aaf0cc93a52c64c94a4d062d02840247805e2051c46e1e21d07feb34954df99'
+  'a0d7fb23b9c003cd04907d8be255f395810b9471a4771ac793cf3ca11b6b7a94'
+  '384ebff8dce1ca6a9d7c91f183c2634d4ddb2160cb613c34259dc3d336512d2c'
+  'fb14db1fbbe23e6dad0a62a9ad63fb03948179f04f0c55c0bc1f8399d55e4d4c')
