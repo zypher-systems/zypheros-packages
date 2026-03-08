@@ -1,0 +1,26 @@
+# Maintainer: Zypher <zypher@zyphersystems.com>
+
+pkgname=zypheros-gaming-env
+pkgver=0.2.0
+pkgrel=1
+pkgdesc="Meta-package for the ZypherOS Gaming Environment"
+arch=('any')
+url="https://git.zyphersystems.com"
+license=('GPL')
+
+# Pulls exclusively from the official Arch Linux repositories
+depends=(
+  'steam'
+  'lutris'
+  'wine-staging'
+  'gamemode'
+  'mangohud'
+  'flatpak'
+  'lib32-mesa'
+)
+
+package() {
+  # Drop a hidden receipt file so the OS knows this environment is active
+  mkdir -p "${pkgdir}/etc/zypheros/envs"
+  echo "ZypherOS Gaming Environment: Active" >"${pkgdir}/etc/zypheros/envs/gaming"
+}

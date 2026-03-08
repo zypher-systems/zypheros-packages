@@ -1,0 +1,25 @@
+# Maintainer: Zypher <zypher@zyphersystems.com>
+
+pkgname=zypheros-creator-env
+pkgver=0.2.0
+pkgrel=1
+pkgdesc="Meta-package for the ZypherOS Creator Environment"
+arch=('any')
+url="https://git.zyphersystems.com"
+license=('GPL')
+
+# Pulls exclusively from the official Arch Linux repositories
+depends=(
+  'obs-studio'
+  'kdenlive'
+  'krita'
+  'audacity'
+  'inkscape'
+  'flatpak'
+)
+
+package() {
+  # Drop a hidden receipt file so the OS knows this environment is active
+  mkdir -p "${pkgdir}/etc/zypheros/envs"
+  echo "ZypherOS Creator Environment: Active" >"${pkgdir}/etc/zypheros/envs/creator"
+}
