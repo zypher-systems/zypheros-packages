@@ -2,7 +2,7 @@
 
 pkgname=zypheros-guide
 pkgver=0.2.1
-pkgrel=2
+pkgrel=3
 pkgdesc="The official ZypherOS documentation and terminal reader"
 arch=('any')
 url="https://git.zyphersystems.com"
