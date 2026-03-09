@@ -2,7 +2,7 @@
 
 pkgname=zypheros-guide
 pkgver=0.2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="The official ZypherOS documentation and terminal reader"
 arch=('any')
 url="https://git.zyphersystems.com"
@@ -25,4 +25,17 @@ EOF
 
   # 3. Make the command executable
   chmod +x "${pkgdir}/usr/bin/zypheros-guide"
+
+  # 4. Create the GUI Application Menu Shortcut for Okular
+  mkdir -p "${pkgdir}/usr/share/applications"
+  cat <<'EOF' >"${pkgdir}/usr/share/applications/zypheros-guide.desktop"
+[Desktop Entry]
+Type=Application
+Name=ZypherOS Guide
+Comment=The Official ZypherOS User Manual
+Exec=okular /usr/share/zypheros/guide.md
+Icon=system-help
+Terminal=false
+Categories=System;Documentation;Core;
+EOF
 }
