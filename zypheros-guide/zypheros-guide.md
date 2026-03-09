@@ -172,6 +172,33 @@ flatpak search <app_name>
 flatpak install flathub <Application.ID>
 ```
 
+### AUR (Arch User Repository)
+ZypherOS includes yay preinstalled.  Yay is your gateway into the AUR.  The AUR is a massive collection of scripts designed to install nearly any applications onto your computer.  
+
+The command `yay` allows you tap into the AUR to install your needed applications.  I would recomend only using packages out of the AUR if they are not natively in the Arch Repositories. 
+
+`yay` utilizes the sames switches as pacman to keep things simple to remember. 
+
+### Managing AUR Packages
+To search the official Arch repositories and the ZypherOS repository for a package:
+```bash
+yay -Ss <search_term>
+```
+
+To install a package:
+```bash
+yay -S <package_name>
+```
+
+To cleanly remove a package **and** all of its unused dependencies (Highly Recommended over standard removal):
+```bash
+yay -Rns <package_name>
+```
+```
+```
+```
+```
+
 ---
 
 ## 5. The Terminal Experience
