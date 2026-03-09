@@ -1,0 +1,28 @@
+# Maintainer: Zypher <zypher@zyphersystems.com>
+
+pkgname=zypheros-guide
+pkgver=0.2.1
+pkgrel=1
+pkgdesc="The official ZypherOS documentation and terminal reader"
+arch=('any')
+url="https://git.zyphersystems.com"
+license=('GPL')
+depends=('neovim' 'bat')
+source=('zypheros-guide.md')
+sha256sums=('SKIP') # Using SKIP so you don't have to update checksums every time you edit the text
+
+package() {
+  # 1. Install the master Markdown file into the system directory
+  install -Dm644 "${srcdir}/zypheros-guide.md" "${pkgdir}/usr/share/zypheros/guide.md"
+
+  # 2. Generate the universal terminal command
+  mkdir -p "${pkgdir}/usr/bin"
+  cat <<'EOF' >"${pkgdir}/usr/bin/zypheros-guide"
+#!/bin/bash
+# Launches the official ZypherOS guide in Neovim (Read-Only mode)
+nvim -R /usr/share/zypheros/guide.md
+EOF
+
+  # 3. Make the command executable
+  chmod +x "${pkgdir}/usr/bin/zypheros-guide"
+}
