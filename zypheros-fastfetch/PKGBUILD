@@ -1,6 +1,6 @@
 pkgname=zypheros-fastfetch
 pkgver=0.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Default Fastfetch configuration and branding for ZypherOS"
 arch=('any')
 url="https://zyphersystems.com"
